@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeChange } from "@/components/ModeChange";
+import NavLinks from "@/components/NavLinks";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,12 +38,21 @@ export default function RootLayout({
 }
 
 export function NavBar() {
+  const navLinks = [
+    { title: "Home", link: "/" },
+    { title: "Message", link: "/message" },
+    { title: "Redirect", link: "/redirect" },
+  ];
+
   return (
     <header className="w-full border-b border-border/40 flex py-2 sticky justify-center">
       <Container>
         <div className="flex items-between">
           <div className="w-full flex items-center">
-            <h1 className="font-bold text-lg">Auth Test</h1>
+            <Link href={"/"}>
+              <h1 className="font-bold text-lg mr-6">Auth Test</h1>
+            </Link>
+            <NavLinks links={navLinks} />
           </div>
           <ModeChange />
         </div>
@@ -60,11 +71,7 @@ export function Container({
   hasPadding?: boolean;
 }) {
   return (
-    <div
-      className={`w-full max-w-7xl mx-${margin} ${
-        hasPadding ? "px-2" : "px-0"
-      }`}
-    >
+    <div className={`w-full max-w-7xl mx-6 ${hasPadding ? "px-2" : "px-0"}`}>
       {children}
     </div>
   );
