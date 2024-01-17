@@ -63,11 +63,9 @@ export function NavBar() {
 
 export function Container({
   children,
-  margin,
   hasPadding = false,
 }: {
   children: React.ReactNode;
-  margin: string;
   hasPadding?: boolean;
 }) {
   return (
