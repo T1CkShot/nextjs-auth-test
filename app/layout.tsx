@@ -5,6 +5,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeChange } from "@/components/ModeChange";
 import NavLinks from "@/components/NavLinks";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { OPTIONS } from "./api/auth/[...nextauth]/route";
+import { Button } from "@/components/ui/button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,13 +40,13 @@ export default function RootLayout({
   );
 }
 
-export function NavBar() {
+export async function NavBar() {
   const navLinks = [
-    { title: "Home", link: "/" },
     { title: "Message", link: "/message" },
     { title: "Redirect", link: "/redirect" },
   ];
 
+  const session = await getServerSession(OPTIONS);
   return (
     <header className="w-full border-b border-border/40 flex py-2 sticky justify-center">
       <Container>
@@ -54,7 +57,18 @@ export function NavBar() {
             </Link>
             <NavLinks links={navLinks} />
           </div>
-          <ModeChange />
+          <div className="flex gap-5">
+            {session == null ? (
+              <Button asChild>
+                <Link href="/api/auth/signin">Sign in</Link>
+              </Button>
+            ) : (
+              <Button asChild variant={"secondary"}>
+                <Link href={"/api/auth/signout"}>Sign out</Link>
+              </Button>
+            )}
+            <ModeChange />
+          </div>
         </div>
       </Container>
     </header>
