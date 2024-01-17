@@ -3,7 +3,6 @@
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
@@ -21,10 +20,8 @@ export default function NavLinks({ links }: { links: linkItem[] }) {
         {links.map((item) => {
           return (
             <NavigationMenuItem key={item.link}>
-              <Link href={item.link}>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  {item.title}
-                </NavigationMenuLink>
+              <Link href={item.link} className={navigationMenuTriggerStyle()}>
+                {item.title}
               </Link>
             </NavigationMenuItem>
           );
